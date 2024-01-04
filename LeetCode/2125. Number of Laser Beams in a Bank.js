@@ -1,18 +1,27 @@
 var numberOfBeams = function(bank) {
-    let prevRowCount = 0;
-    let total = 0;
+    // initalize a variable to keep the track of the rows
+    const count = [];
+    total = 0
 
-    const calc = (s) => {
-        return s.split('').reduce((count, c) => count + parseInt(c), 0);
-    };
 
-    for (const row of bank) {
-        const curRowCount = calc(row);
-        if (curRowCount === 0)
-            continue;
-
-        total += curRowCount * prevRowCount;
-        prevRowCount = curRowCount;
+    // Loop through each string and find out
+    for(let row of bank){
+        let device = 0;
+        for(let i of row){
+            if(Number(i)){
+                device += 1
+            }
+        }
+        if(device){
+            count.push(device);
+        }
     }
-    return total;
+    
+    // if the row is empty then the security devices are found on the next device
+    for(let i = 0;i < count.length - 1;i++){
+            if(count[i]){
+                total += (count[i] * count[i + 1])
+            }
+    }
+    return total
 };
